@@ -2,6 +2,7 @@ import os
 from torch.utils.data import Dataset
 import torchvision
 from sklearn.preprocessing import LabelEncoder
+from torchvision.io import ImageReadMode
 
 
 class PetDataset(Dataset):
@@ -27,7 +28,7 @@ class PetDataset(Dataset):
 
     def __getitem__(self, idx):
         image_path = self.image_paths[idx]
-        image = torchvision.io.read_image(image_path)
+        image = torchvision.io.read_image(image_path, mode=ImageReadMode.RGB)
         if self.transform:
             image = self.transform(image)
 
