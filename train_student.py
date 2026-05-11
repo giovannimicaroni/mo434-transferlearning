@@ -17,7 +17,6 @@ def train_student(student, teacher, dataset, epochs, lr, device='cuda'):
 
     optimizer = optim.Adam(student.parameters(), lr=lr)
 
-    print("Acabou de carregar")
     for epoch in range(epochs):
         epoch_loss = 0
         
@@ -50,3 +49,33 @@ def train_student(student, teacher, dataset, epochs, lr, device='cuda'):
     print("\nTraining complete!")
 
     return
+
+def evaluate_student(student, rest_of_teacher, dataset, device='cuda' if torch.cuda.is_available() else 'cpu'):
+    dataloader = DataLoader(dataset, batch_size=32, shuffle=False)
+
+    student.eval()
+    rest_of_teacher.eval()
+    
+    student.to(device)
+    rest_of_teacher.to(device)
+
+    correct = 0
+    total = 0
+
+    with torch.no_grad(): 
+        for images, labels in dataloader:
+            images = images.to(device)
+            labels = labels.to(device)
+
+            features = student(images)
+            outputs = rest_of_teacher(features)
+
+            _, predicted = torch.max(outputs, 1)
+            
+            total += labels.size(0)
+            correct += (predicted == labels).sum().item()
+
+    accuracy = 100 * correct / total
+    print(f'Accuracy: {accuracy:.2f}%')
+    return accuracy
+                
