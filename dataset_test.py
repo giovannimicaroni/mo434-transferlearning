@@ -7,7 +7,7 @@ from tqdm import tqdm
 
 def main():
     dataset = PetDataset(
-        root_path="/home/gimicaroni/Documents/Datasets/Oxford-Pet-Dataset/images/images"
+        root_path="/home/gabriel/Documentos/Datasets/Oxford-Pet-Dataset/images"
     )
     dataset_loader = DataLoader(dataset)
     for data in tqdm(dataset_loader):
