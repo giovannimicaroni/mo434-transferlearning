@@ -1,0 +1,21 @@
+teacher:
+  architecture: "vgg11"
+  weights: "DEFAULT"
+  weights_path: null
+  pretrained: true
+  num_classes: 37
+  freeze_feature_extractor: true
+  train_classifier_only: true
+
+training:
+  batch_size: 32
+  fine_tune_epochs: 15
+  fine_tune_lr: 0.001
+  distillation_epochs: 50
+  distillation_lr: 0.0002
+  optimizer: "Adam"
+
+dataset:
+  path: "/home/gimicaroni/Documents/Datasets/Oxford-Pet-Dataset/images"
+  image_size: 224
+
